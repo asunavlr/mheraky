@@ -111,7 +111,7 @@ export default function Feed() {
             render: (emFoco) => (
               <figure>
                 <div
-                  className="aspect-[4/5] overflow-hidden border border-lavanda/20"
+                  className="cr-peca aspect-[4/5] overflow-hidden border border-lavanda/25"
                   /* `containerType` faz as medidas internas das peças
                      serem por cento da LARGURA DO CARTÃO: a mesma arte
                      fica certa num cartão de 22rem e num de 78vw, com o
@@ -121,7 +121,7 @@ export default function Feed() {
                   <Peca />
                 </div>
                 <figcaption
-                  className={`mt-4 flex items-baseline justify-between gap-4 text-[0.78rem] transition-colors duration-500 ${emFoco ? "text-nata" : "text-nata-fraca/60"}`}
+                  className={`mt-4 flex items-baseline justify-between gap-4 text-[0.78rem] transition-colors duration-500 ${emFoco ? "text-nata" : "text-nata-fraca"}`}
                 >
                   <span>{legenda}</span>
                   {/* a etiqueta que separa reconstrução de original: sem

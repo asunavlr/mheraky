@@ -69,7 +69,11 @@ export function PostIgnorado() {
         >
           Seu post está sendo ignorado?
         </p>
-        <p className="mt-[6%] text-[4.4cqw] leading-snug text-uva/70">
+        {/* medido a 4,05:1 em `uva/70`, contra os 4,5 exigidos. Roxo a 70%
+            sobre creme clareia para um lilás médio, e lilás médio sobre
+            creme é o par que mais engana o olho: parece contrastado de
+            longe e some em corpo de leitura */}
+        <p className="mt-[6%] text-[4.4cqw] leading-snug text-uva/90">
           O design do seu post pode ser o diferencial entre ser visto ou
           ignorado.
         </p>
@@ -150,7 +154,10 @@ export function PostQuiz() {
   return (
     <div className="flex h-full flex-col justify-between bg-uva-2 p-[9%] text-nata">
       <div>
-        <span className="text-[3.4cqw] uppercase tracking-[0.24em] text-lavanda">
+        {/* medido a 4,44:1 contra os 4,5 exigidos, e o corpo aqui é de
+            9px na largura do cartão da seção do quiz: em tamanho assim
+            não há margem para tom intermediário */}
+        <span className="text-[3.4cqw] uppercase tracking-[0.24em] text-nata">
           post fixado
         </span>
         <p

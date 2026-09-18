@@ -150,7 +150,7 @@ export default function Depoimentos() {
                 id: d.nome ?? i,
                 legenda: d.nome,
                 render: () => (
-                  <figure className="cartao flex h-full flex-col justify-between p-9">
+                  <figure className="cr-peca cartao flex h-full flex-col justify-between p-9">
                     <Aspas className="text-[3.5rem]" />
                     <blockquote className="mt-2 text-[1.05rem] leading-relaxed">
                       {d.texto}

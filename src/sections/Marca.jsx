@@ -92,16 +92,16 @@ export default function MarcaSecao() {
                 de qualquer palavra ser lida. */}
             <div className="grid grid-cols-2 border border-lavanda/25">
               <div className="border-r border-lavanda/25 p-6 sm:p-8">
-                <span className="text-[0.66rem] uppercase tracking-[0.24em] text-nata-fraca/60">
+                <span className="text-[0.66rem] uppercase tracking-[0.24em] text-nata-fraca">
                   como tratam
                 </span>
                 <p
-                  className="mt-3 font-display text-[clamp(1.3rem,2.6vw,2rem)] leading-tight text-nata-fraca/70 line-through decoration-1"
+                  className="mt-3 font-display text-[clamp(1.3rem,2.6vw,2rem)] leading-tight text-nata-fraca line-through decoration-1"
                   style={{ fontWeight: 500 }}
                 >
                   despesa
                 </p>
-                <p className="mt-3 text-[0.85rem] leading-snug text-nata-fraca/60">
+                <p className="mt-3 text-[0.85rem] leading-snug text-nata-fraca">
                   corta quando aperta, volta quando sobra
                 </p>
               </div>

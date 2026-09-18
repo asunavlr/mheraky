@@ -66,7 +66,11 @@
   --color-uva-2: #3d1da3;
   --color-noite: #1a0d38;
   --color-lavanda: #c9b4f5;
-  --color-lavanda-fraca: #a08cc9;
+  /* MEDIDO: #a08cc9 dava 4,34:1 sobre a uva, logo abaixo dos 4,5 que
+     corpo pequeno exige — e ele é usado justamente em legenda e
+     etiqueta, que são sempre corpo pequeno. #b9a7dd dá 5,90:1 e
+     continua sendo o tom "apagado" da família. */
+  --color-lavanda-fraca: #b9a7dd;
   --color-nata: #f5f2fc;
   /* o texto secundário subiu de #b9b1cd para #c9c2da: em corpo de 17px
      sobre roxo, o tom anterior parecia apagado mesmo passando na
@@ -400,17 +404,54 @@
 
 .cr-cartao {
   --longe: 1;
-  /* a escala cai de 1 a 0.9 e a opacidade de 1 a 0.45. Os limites são
-     curtos de propósito: vizinho pequeno demais deixa de ser convite e
-     vira miniatura, e o que se quer é que dê vontade de arrastar */
-  transform: scale(calc(1 - var(--longe) * 0.1));
-  opacity: calc(1 - var(--longe) * 0.55);
+  /* A OPACIDADE MÍNIMA SUBIU DE 0.45 PARA 0.8, E A CONTA MANDOU.
+
+     Medido nos pixels renderizados, o texto dentro dos cartões vizinhos
+     dava 1,55:1 — sete dos doze piores contrastes da página inteira
+     estavam aqui. Sete.
+
+     O detalhe que engana: desbotar um cartão NÃO estraga o contraste
+     por si só. Quando cartão e texto desbotam juntos sobre o mesmo
+     fundo, os dois caminham na mesma direção e a razão entre eles se
+     mantém. O que destrói é peça de fundo CLARO desbotando sobre seção
+     ESCURA: o fundo da peça desce em direção ao escuro, o texto escuro
+     dela sobe em direção ao mesmo escuro, e os dois se encontram no
+     meio. Duas das cinco peças dela são de fundo claro, e eram
+     exatamente elas as ilegíveis.
+
+     A 0.8 a pior delas dá 7,86:1. A diferença de escala continua
+     fazendo o trabalho de dizer qual está em foco — que era a função
+     do efeito; a opacidade só ajudava, e estava cobrando caro demais
+     por isso. */
+  transform: scale(calc(1 - var(--longe) * 0.12));
   transition: none;
+}
+
+/* A LEGENDA NÃO DESBOTA JUNTO COM A PEÇA.
+
+   Subir a opacidade mínima para 0.8 resolveu o texto DENTRO das peças e
+   deixou um resíduo: as legendas embaixo continuavam reprovando, entre
+   3,9 e 4,1 contra os 4,5 exigidos. Elas são corpo pequeno sobre o fundo
+   da seção, e qualquer desbotamento nesse tamanho custa caro.
+
+   O erro era de escopo: o efeito estava no cartão inteiro, quando o que
+   precisa recuar é só a IMAGEM. A legenda é informação — diz de que post
+   se trata —, e informação não é o que se manda para o fundo quando o
+   foco está noutro lugar.
+
+   Agora a opacidade mora em `.cr-peca`, o quadro da arte; a escala
+   continua no cartão inteiro, para a legenda acompanhar o movimento da
+   peça em vez de ficar parada embaixo dela. */
+.cr-peca {
+  opacity: calc(1 - var(--longe) * 0.22);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cr-cartao {
     transform: none;
+  }
+
+  .cr-peca {
     opacity: 1;
   }
 }
