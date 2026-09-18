@@ -1,0 +1,312 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Mheraky · Social Media, Design e Marketing
+   Pederneiras · SP
+
+   A IDEIA: a página é uma revista, não um feed.
+
+   A marca dela é um monograma didone — serifa reta, contraste altíssimo
+   entre haste e filete. Essa é a letra da alta-costura e da capa de
+   revista, e ela não foi escolhida por acaso: o argumento central do
+   perfil é "se você não investe na sua marca, por que o cliente
+   deveria?". Isso é um argumento de AUTORIDADE, e autoridade tem uma
+   tipografia própria.
+
+   Então a página não imita rede social. Ela imita o objeto que a rede
+   social nunca vai ser: página de revista, com margem larga, filete
+   fino, caixa alta espaçada e muito espaço vazio. O vazio aqui é
+   argumento — quem tem pressa preenche tudo.
+
+   AS CORES SÃO AS DA ARTE DELA, amostradas do monograma: o roxo
+   profundo #180048, a lavanda #c0a8f0 e o quase branco. A página é
+   ESCURA, ao contrário das outras duas da casa, porque é assim que o
+   feed dela é: peça clara sobre fundo de uva, com a lavanda entrando
+   como luz.
+
+   A LAVANDA É LUZ, NUNCA ÁREA. Ela aparece em filete, em uma palavra da
+   manchete, no fio que separa. Pintada em bloco, vira lilás de
+   papelaria e a autoridade cai por terra.
+
+   TIPOGRAFIA em três vozes:
+   · Bodoni Moda para tudo que é manchete e marca. O eixo óptico importa
+     mais aqui do que em qualquer outra família: em corpo grande os
+     filetes têm de afinar, em corpo pequeno têm de engrossar ou somem.
+   · Archivo comprimida, só nas frases de impacto. Didone não grita, e
+     alguns posts dela gritam de propósito.
+   · Inter no texto corrido, que precisa sumir e deixar ler.
+   ============================================================ */
+
+@theme {
+  --color-uva: #180048;
+  --color-uva-2: #241058;
+  --color-noite: #0e0320;
+  --color-lavanda: #c0a8f0;
+  --color-lavanda-fraca: #8e79b8;
+  --color-nata: #f3f0fa;
+  --color-nata-fraca: #b9b1cd;
+
+  --font-display: "Bodoni Moda", ui-serif, Didot, Georgia, serif;
+  --font-impacto: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-fina: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: dark;
+  --pad: max(clamp(18px, 5vw, 96px), env(safe-area-inset-left));
+  --nav: 70px;
+  --fio: 1px solid rgba(192, 168, 240, 0.22);
+}
+
+@layer base {
+  /* o reset mora DENTRO de `base`: no Tailwind 4 as camadas de cascata
+     são reais, e estilo sem camada vence estilo em camada — solto,
+     `* { padding: 0 }` anularia todas as utilidades de espaçamento sem
+     dar erro nenhum */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* `overflow-x` precisa estar nos DOIS: quando o `html` não declara o
+     seu, o navegador propaga o do `body` para a viewport e a regra deixa
+     de valer onde foi escrita. `clip` e não `hidden` — `hidden` cria
+     contexto de rolagem e desliga os pins do ScrollTrigger */
+  html {
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    background: var(--color-noite);
+    color: var(--color-nata);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--color-lavanda);
+    color: var(--color-uva);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-lavanda);
+    outline-offset: 4px;
+  }
+}
+
+@layer components {
+  .manchete {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .titulo {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  /* A VOZ DE IMPACTO: comprimida, pesada, caixa alta.
+
+     Usada só onde o post original grita. Didone não grita — as serifas
+     finas quebram na escala em que essas frases precisam viver —, então
+     a página troca de voz em vez de forçar a família errada. */
+  .impacto {
+    font-family: var(--font-impacto);
+    font-variation-settings: "wdth" 76, "wght" 800;
+    font-size: clamp(1.9rem, 5vw, 4rem);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  /* A ETIQUETA de seção: caixa alta muito espaçada, com um filete
+     antes. É a marcação de revista, e o espaçamento largo é o que
+     impede uma linha de 11px de parecer legenda de rodapé. */
+  .etiqueta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9em;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--color-lavanda);
+  }
+
+  .etiqueta::before {
+    content: "";
+    width: 2.4em;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+
+  .texto {
+    font-size: clamp(1rem, 1.05vw, 1.1rem);
+    line-height: 1.78;
+    max-width: 60ch;
+    color: var(--color-nata-fraca);
+  }
+
+  .linha {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.12em;
+  }
+
+  .linha > span {
+    display: block;
+  }
+
+  /* O BOTÃO É UM RETÂNGULO DE FILETE, sem canto arredondado e sem
+     preenchimento por padrão.
+
+     Cápsula e sombra são a gramática do aplicativo; esta página é
+     revista. O preenchimento entra no hover, varrendo de baixo para
+     cima — o gesto de uma marcação de caneta sobre a linha. */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    overflow: hidden;
+    padding: 1em 2em;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border: 1px solid currentColor;
+    transition: color 0.4s var(--ease-fina);
+  }
+
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: currentColor;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.45s var(--ease-fina);
+  }
+
+  .btn:hover::after {
+    transform: scaleY(1);
+  }
+
+  /* o texto precisa sobreviver ao preenchimento: ele vira a cor do
+     fundo da seção, e por isso é variável e não valor fixo */
+  .btn--lavanda {
+    color: var(--color-lavanda);
+  }
+
+  .btn--lavanda:hover {
+    color: var(--color-uva);
+  }
+
+  .btn--nata {
+    color: var(--color-nata);
+  }
+
+  .btn--nata:hover {
+    color: var(--color-uva);
+  }
+
+  .secao {
+    position: relative;
+    padding-inline: var(--pad);
+    padding-block: clamp(5rem, 11vw, 10rem);
+  }
+
+  /* O CARTÃO DE FILETE: sem preenchimento, sem sombra, sem curva.
+
+     A única decoração é o fio, e ele acende na lavanda quando o
+     ponteiro chega. Numa página que argumenta sofisticação, cartão com
+     sombra e canto redondo entregaria o contrário — é a moldura do
+     aplicativo, não a da revista. */
+  .cartao {
+    border: var(--fio);
+    transition:
+      border-color 0.45s var(--ease-fina),
+      background 0.45s var(--ease-fina),
+      transform 0.45s var(--ease-fina);
+  }
+
+  .cartao:hover {
+    border-color: rgba(192, 168, 240, 0.7);
+    background: rgba(192, 168, 240, 0.05);
+    transform: translateY(-4px);
+  }
+
+  .pular {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .pular:focus {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    padding: 0.8em 1.2em;
+    background: var(--color-lavanda);
+    color: var(--color-uva);
+  }
+}
+
+/* o laço da fita: até -50% porque o trilho tem duas cópias do grupo —
+   meio caminho é exatamente uma cópia, e a emenda não aparece */
+@keyframes correr {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
