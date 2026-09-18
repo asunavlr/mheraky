@@ -64,7 +64,8 @@ export const MENU = [
   ["marca", "a marca"],
   ["quiz", "qual serviço"],
   ["servicos", "serviços"],
-  ["trabalhos", "trabalhos"],
+  ["trabalhos", "o feed"],
+  ["depoimentos", "depoimentos"],
   ["duvidas", "dúvidas"],
 ];
 
@@ -259,6 +260,32 @@ export const DUVIDAS = [
     "Serve, e a gente trabalha em cima dela. Se em algum ponto ela estiver atrapalhando, eu falo, mas a decisão de mexer é sua.",
   ],
 ];
+
+/* ============================================================
+   OS DEPOIMENTOS — vazios, e eu não vou preencher.
+
+   ISTO NÃO É PREGUIÇA NEM FALTA DE ESPAÇO. Depoimento é a única peça de
+   um site de serviço que, inventada, vira problema jurídico e não
+   estético: é fala atribuída a uma pessoa nomeada. No dia em que um
+   visitante procurar "Ana P." no Instagram e não achar ninguém, o que
+   cai não é a seção — é a credibilidade da página inteira, e junto com
+   ela a da própria agência que argumenta sobre confiança duas telas
+   acima.
+
+   Enquanto não houver, a seção mostra o LUGAR e diz o que é. Um convite
+   escrito honestamente converte melhor do que três elogios que ninguém
+   acredita — e todo mundo já aprendeu a não acreditar.
+
+   COMO PREENCHER: cada item precisa de `texto`, `nome` e `negocio`, e o
+   `instagram` é opcional mas vale muito: depoimento com perfil para
+   conferir vale por três sem. Com um item na lista, o carrossel liga
+   sozinho e o estado vazio some.
+
+   PEDIR a ela: 3 a 5 depoimentos com nome, negócio e autorização de
+   uso. Print de conversa serve, e é o formato mais confiável que
+   existe — mas aí precisa da autorização por escrito.
+   ============================================================ */
+export const DEPOIMENTOS = [];
 
 export const FITA = [
   "social media",

@@ -22,6 +22,35 @@ Preenchendo `MARCA.whatsapp` em `src/dados.js`, os seis botões da página
 trocam de uma vez — o destino é calculado num lugar só, na função
 `contato()`.
 
+## O feed é reconstruído, e a página diz isso
+
+A descoberta que destravou a seção: **o feed dela não é fotográfico.** As
+sete publicações são desenhos tipográficos — frase grande sobre fundo de
+uva, serifa e condensada, o monograma no pé. Disso eu tenho tudo o que
+importa: as frases, a cartela, a família e o monograma.
+
+Então as cinco peças do carrossel são **recriações das artes dela**, com
+as frases originais, e cada legenda traz a palavra "recriação". Passar
+reconstrução por peça original seria exatamente o que a seção do preço
+acusa duas telas acima.
+
+`src/componentes/Post.jsx` tem uma função por peça. Quando as artes em
+arquivo chegarem, cada item de `POSTS` ganha `foto:` e o cartão passa a
+mostrar o PNG.
+
+## Depoimentos: a seção está pronta e a lista está vazia
+
+E é decisão, não pendência esquecida. Depoimento é a única peça de um site
+de serviço que, inventada, deixa de ser problema estético e vira problema
+de verdade: é fala atribuída a uma pessoa com nome. Basta um visitante
+procurar o perfil citado e não achar ninguém para a credibilidade da
+página inteira cair.
+
+Com um item em `DEPOIMENTOS`, o carrossel liga sozinho e o estado vazio
+some. Cada item precisa de `texto`, `nome` e `negocio`; `instagram` é
+opcional e vale muito — depoimento com perfil para conferir vale por três
+sem.
+
 ## Outras coisas a pedir
 
 1. **4 a 6 peças de trabalho**, com nome de quem contratou e autorização.

@@ -310,3 +310,41 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ============================================================
+   O CARROSSEL.
+
+   `--longe` é escrito pelo JavaScript a cada quadro: 0 quando o cartão
+   está no centro da janela, 1 quando está a uma largura de distância. O
+   CSS lê essa variável e deriva tudo dela — escala, opacidade e
+   saturação. É por isso que a animação é fluida sem tween nenhum: ela é
+   uma FUNÇÃO da posição, não uma transição entre estados.
+
+   A barra de rolagem some porque o trilho já tem os pontos e o arrasto;
+   uma barra nativa embaixo de cinco cartões grandes vira sujeira. */
+.cr-trilho {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.cr-trilho::-webkit-scrollbar {
+  display: none;
+}
+
+.cr-cartao {
+  --longe: 1;
+  /* a escala cai de 1 a 0.9 e a opacidade de 1 a 0.45. Os limites são
+     curtos de propósito: vizinho pequeno demais deixa de ser convite e
+     vira miniatura, e o que se quer é que dê vontade de arrastar */
+  transform: scale(calc(1 - var(--longe) * 0.1));
+  opacity: calc(1 - var(--longe) * 0.55);
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cr-cartao {
+    transform: none;
+    opacity: 1;
+  }
+}

@@ -6,7 +6,8 @@ import MarcaSecao from "./sections/Marca.jsx";
 import Quiz from "./sections/Quiz.jsx";
 import Fita from "./componentes/Fita.jsx";
 import Servicos from "./sections/Servicos.jsx";
-import Trabalhos from "./sections/Trabalhos.jsx";
+import Feed from "./sections/Feed.jsx";
+import Depoimentos from "./sections/Depoimentos.jsx";
 import Duvidas from "./sections/Duvidas.jsx";
 import Contato from "./sections/Contato.jsx";
 import Rodape from "./sections/Rodape.jsx";
@@ -21,9 +22,11 @@ import Rodape from "./sections/Rodape.jsx";
       desarmada aqui, o resto da página é conversa.
    3. QUIZ — e agora que a pessoa quer, ela descobre do que precisa.
    4. SERVIÇOS — o detalhe do que o quiz apontou.
-   5. TRABALHOS — o que já foi feito (ainda nada, e a página diz).
-   6. DÚVIDAS — as objeções que sobraram.
-   7. CONTATO — o passo.
+   5. O FEED — as peças dela, num carrossel que se arrasta. É a única
+      seção que imita o produto em vez de descrevê-lo.
+   6. DEPOIMENTOS — pronta e vazia, e a página diz por quê.
+   7. DÚVIDAS — as objeções que sobraram.
+   8. CONTATO — o passo.
 
    QUIZ ANTES DE SERVIÇOS, e não depois. Com quatro opções na tela, quem
    não sabe o que precisa não escolhe nenhuma e vai embora; três
@@ -49,7 +52,8 @@ export default function App() {
         <Quiz />
         <Fita velocidade={50} direcao={1} />
         <Servicos />
-        <Trabalhos />
+        <Feed />
+        <Depoimentos />
         <Duvidas />
         <Contato />
       </main>
