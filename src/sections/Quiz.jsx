@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP, prefersReduced, entrar } from "../lib/anim.js";
 import { QUIZ, MARCA, contato } from "../dados.js";
+import { PostQuiz } from "../componentes/Post.jsx";
 
 /* ============================================================
    O QUIZ — "qual dos meus serviços é ideal para você?"
@@ -80,18 +81,43 @@ export default function Quiz() {
   return (
     <section id="quiz" ref={raiz} className="secao bg-uva">
       <div className="mx-auto max-w-[68rem]">
-        <div className="qz-cabeca text-center">
-          <span className="etiqueta justify-center">qual serviço</span>
-          <h2 className="titulo mt-6">
-            Qual dos meus serviços
-            <br />é <span className="italic text-lavanda">ideal para você</span>?
-          </h2>
-          <p className="texto mx-auto mt-5 text-center">
-            Três perguntas, meio minuto. Nenhuma delas sobre orçamento.
-          </p>
-        </div>
+        {/* DUAS COLUNAS, E A DA ESQUERDA É A ORIGEM DO QUIZ.
 
-        <div className="mx-auto mt-14 max-w-[46rem]">
+            Medida, esta seção ocupava 19% da própria área: uma coluna de
+            46rem centrada numa seção de 82rem deixava as duas laterais
+            vazias por mil pixels de altura.
+
+            O que entrou à esquerda não é enfeite para tapar buraco: é o
+            POST FIXADO dela, que é de onde este quiz saiu. Mostrar a
+            peça original ao lado da versão interativa faz a seção contar
+            a própria procedência — e prova, sem dizer, que a página foi
+            construída a partir do que ela já tinha, e não de um modelo
+            genérico. */}
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-16">
+          <div className="qz-cabeca">
+            <span className="etiqueta">qual serviço</span>
+            <h2 className="titulo mt-6">
+              Qual dos meus serviços é{" "}
+              <span className="italic text-lavanda">ideal para você</span>?
+            </h2>
+            <p className="texto mt-5">
+              Três perguntas, meio minuto. Nenhuma delas sobre orçamento.
+            </p>
+
+            <figure className="mt-10 hidden max-w-[17rem] lg:block">
+              <div
+                className="aspect-[4/5] overflow-hidden border border-lavanda/25"
+                style={{ containerType: "inline-size" }}
+              >
+                <PostQuiz />
+              </div>
+              <figcaption className="mt-3 text-[0.72rem] uppercase tracking-[0.18em] text-lavanda-fraca">
+                o post que virou este quiz · recriação
+              </figcaption>
+            </figure>
+          </div>
+
+        <div className="w-full">
           {/* A BARRA DE PROGRESSO É DE FILETE, e não de bloco.
 
               Ela existe para responder "quanto falta?" antes de a pessoa
@@ -190,6 +216,7 @@ export default function Quiz() {
               </div>
             )}
           </div>
+        </div>
         </div>
       </div>
     </section>

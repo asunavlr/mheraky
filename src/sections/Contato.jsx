@@ -111,7 +111,40 @@ export default function Contato() {
           </a>
         </div>
 
-        <p className="ct-anima mt-10 text-[0.72rem] uppercase tracking-[0.24em] text-nata-fraca">
+        {/* O QUE ACONTECE DEPOIS DE CLICAR.
+
+            Medida, esta seção ocupava 18% da própria área — era a mais
+            vazia da página, e logo no lugar onde a pessoa decide.
+
+            O que entrou não é enchimento: é a resposta à pergunta que
+            trava quem está com o dedo no botão, que nunca é "quanto
+            custa" e sim "o que vai acontecer comigo se eu mandar
+            mensagem". Três passos, sem prazo prometido e sem número
+            inventado — só a ordem das coisas, que eu posso sustentar. */}
+        <ol className="ct-anima mx-auto mt-16 grid max-w-[46rem] gap-8 text-left sm:grid-cols-3 sm:gap-6">
+          {[
+            ["Você manda", "conta o que faz e onde quer chegar"],
+            ["Eu respondo", "com o que vejo, sem enrolar e sem proposta antes da hora"],
+            ["A gente conversa", "por chamada, e aí sim sai o orçamento"],
+          ].map(([titulo, texto], i) => (
+            <li key={titulo} className="border-t border-lavanda/25 pt-5">
+              <span className="font-display text-[0.85rem] text-lavanda">
+                0{i + 1}
+              </span>
+              <h3
+                className="mt-2 font-display text-[1.15rem] leading-tight"
+                style={{ fontWeight: 500 }}
+              >
+                {titulo}
+              </h3>
+              <p className="mt-1.5 text-[0.88rem] leading-snug text-nata-fraca">
+                {texto}
+              </p>
+            </li>
+          ))}
+        </ol>
+
+        <p className="ct-anima mt-14 text-[0.72rem] uppercase tracking-[0.24em] text-nata-fraca">
           {MARCA.cidade} · atendimento remoto para todo o Brasil
         </p>
       </div>
