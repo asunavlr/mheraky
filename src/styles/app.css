@@ -38,13 +38,41 @@
    ============================================================ */
 
 @theme {
-  --color-uva: #180048;
-  --color-uva-2: #241058;
-  --color-noite: #0e0320;
-  --color-lavanda: #c0a8f0;
-  --color-lavanda-fraca: #8e79b8;
-  --color-nata: #f3f0fa;
-  --color-nata-fraca: #b9b1cd;
+  /* ============================================================
+     OS FUNDOS CLAREARAM, E A CONTA EXPLICA POR QUÊ.
+
+     A página estava ilegível como conjunto, e não era contraste de
+     texto: medido, o corpo dava 9,7:1 sobre o fundo, bem acima dos
+     4,5:1 que a norma pede. O defeito era outro, e não aparece em
+     teste de texto nenhum.
+
+     As duas cores de seção eram #0e0320 e #180048. A razão de
+     luminância entre elas dava 1,08:1 — e abaixo de ~1,3:1 duas áreas
+     GRANDES e vizinhas são lidas como a mesma cor. A página não tinha
+     seções: tinha uma mancha preta contínua de nove mil pixels, com
+     texto boiando dentro. Daí a sensação de "não dá para enxergar
+     nada", mesmo com cada trecho passando na medição isolada.
+
+     Agora são #1a0d38 e #33168c, a 1,41:1: separação visível sem a
+     página deixar de ser escura. E o roxo passa a LER COMO ROXO — no
+     valor anterior o matiz sumia e sobrava preto, o que também jogava
+     fora a cartela da marca dela.
+
+     O que cada troca preserva: texto a 10,5:1 sobre o escuro e 7,5:1
+     sobre a uva; lavanda a 8,7:1 e 6,2:1. Todos acima do exigido, com
+     folga.
+     ============================================================ */
+  --color-uva: #33168c;
+  --color-uva-2: #3d1da3;
+  --color-noite: #1a0d38;
+  --color-lavanda: #c9b4f5;
+  --color-lavanda-fraca: #a08cc9;
+  --color-nata: #f5f2fc;
+  /* o texto secundário subiu de #b9b1cd para #c9c2da: em corpo de 17px
+     sobre roxo, o tom anterior parecia apagado mesmo passando na
+     medição — fundo colorido come mais contraste aparente que fundo
+     neutro da mesma luminância */
+  --color-nata-fraca: #c9c2da;
 
   --font-display: "Bodoni Moda", ui-serif, Didot, Georgia, serif;
   --font-impacto: "Archivo", ui-sans-serif, system-ui, sans-serif;
@@ -57,7 +85,7 @@
   color-scheme: dark;
   --pad: max(clamp(18px, 5vw, 96px), env(safe-area-inset-left));
   --nav: 70px;
-  --fio: 1px solid rgba(192, 168, 240, 0.22);
+  --fio: 1px solid rgba(201, 180, 245, 0.3);
 }
 
 @layer base {
@@ -214,27 +242,64 @@
     letter-spacing: 0.22em;
     text-transform: uppercase;
     border: 1px solid currentColor;
-    transition: color 0.4s var(--ease-fina);
   }
 
-  .btn::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: currentColor;
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.45s var(--ease-fina);
+  /* O PREENCHIMENTO É FUNDO DO PRÓPRIO BOTÃO, e não um pseudo-elemento.
+
+     Aqui estava o bug que fazia o botão SUMIR no hover. O `::after`
+     tinha `z-index: -1` para ficar atrás do texto — só que z-index
+     negativo não para no elemento: sem um contexto de empilhamento
+     próprio, ele desce ATÉ ATRÁS DO FUNDO DA SEÇÃO. O preenchimento era
+     pintado embaixo do rodapé e nunca aparecia; ao mesmo tempo o texto
+     trocava para a cor escura, como se o fundo claro estivesse lá. Dava
+     texto escuro sobre seção escura: o botão desaparecia inteiro.
+
+     Dava para consertar com `isolation: isolate`, mas isso só esconde a
+     fragilidade — qualquer ancestral que criasse contexto no futuro
+     quebraria de novo.
+
+     A solução sem camada nenhuma: o preenchimento vira uma IMAGEM DE
+     FUNDO do botão, e `background-size` anima de `100% 0` a `100% 100%`.
+     Fundo é sempre pintado abaixo do texto do próprio elemento, por
+     definição do modelo de pintura — não existe empilhamento para dar
+     errado, e a animação é a mesma varredura de baixo para cima. */
+  /* O PREENCHIMENTO NÃO PODE SER `currentColor`.
+
+     Segunda tentativa, segundo defeito, e este é mais sorrateiro: com o
+     fundo em `currentColor`, ele muda JUNTO com o texto no hover. O
+     texto ia para o roxo escuro para se destacar do preenchimento
+     claro — e o preenchimento ia para o roxo escuro também. Fundo e
+     letra na mesma cor exata: o botão virava um retângulo liso, ainda
+     mais ilegível do que quando sumia.
+
+     `currentColor` é ótimo para o que deve acompanhar a cor do texto —
+     a borda em repouso, um ícone. É armadilha para o que precisa
+     CONTRASTAR com ela.
+
+     Então o preenchimento ganha variável própria, `--preenche`, que
+     cada variante fixa e o hover não toca. A borda segue a mesma
+     variável pelo mesmo motivo: em repouso ela coincide com o texto,
+     no hover ela precisa continuar sendo o contorno do preenchimento. */
+  .btn {
+    --preenche: currentColor;
+    background-image: linear-gradient(var(--preenche), var(--preenche));
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: 100% 0;
+    border-color: var(--preenche);
+    transition:
+      color 0.4s var(--ease-fina),
+      background-size 0.45s var(--ease-fina);
   }
 
-  .btn:hover::after {
-    transform: scaleY(1);
+  .btn:hover {
+    background-size: 100% 100%;
   }
 
   /* o texto precisa sobreviver ao preenchimento: ele vira a cor do
      fundo da seção, e por isso é variável e não valor fixo */
   .btn--lavanda {
+    --preenche: var(--color-lavanda);
     color: var(--color-lavanda);
   }
 
@@ -243,6 +308,7 @@
   }
 
   .btn--nata {
+    --preenche: var(--color-nata);
     color: var(--color-nata);
   }
 

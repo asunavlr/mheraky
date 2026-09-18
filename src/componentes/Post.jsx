@@ -125,7 +125,7 @@ export function PostPreco() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(60% 50% at 70% 15%, rgba(192,168,240,0.22), transparent 70%)",
+            "radial-gradient(60% 50% at 70% 15%, rgba(201,180,245,0.26), transparent 70%)",
         }}
       />
       <div className="relative">

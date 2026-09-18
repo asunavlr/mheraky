@@ -93,12 +93,43 @@ export default function Capa() {
       {/* a luz roxa nos cantos: é o que tira o fundo de "preto chapado" e
           dá a ele uma hora do dia. Sem isso a página fica plana e o
           escuro vira ausência de cor em vez de cor */}
+      {/* `z-0`, E NUNCA `-z-10`.
+
+          Este bloco de luz ficou INVISÍVEL desde que foi escrito, e o
+          defeito não dá erro em lugar nenhum: `z-index` negativo não
+          para no elemento. Sem um contexto de empilhamento próprio, ele
+          desce até atrás do FUNDO DA SEÇÃO — e a seção tem fundo. O
+          gradiente era pintado embaixo dele e nunca chegava à tela.
+
+          Medido: a capa devolvia a mesma cor chapada em cinco pontos
+          diferentes, inclusive no meio de onde deveria estar o brilho.
+          Era essa a razão de a página parecer "escura demais" — não
+          faltava cor na cartela, faltava a luz que nunca acendeu.
+
+          Com `z-0` o bloco fica acima do fundo da seção e abaixo do
+          conteúdo, que já é `relative z-10`. É a camada certa, e ela não
+          depende de nenhum ancestral se comportar. */}
       <div
-        className="pointer-events-none absolute inset-0 -z-10"
+        className="pointer-events-none absolute inset-0 z-0"
         aria-hidden="true"
         style={{
+          /* OS BRILHOS FICARAM PARA TRÁS DA TROCA DE CARTELA.
+
+             Eles citavam `rgba(24,0,72,…)`, que era o roxo ANTIGO — o
+             mesmo tom que a página inteira acabou de abandonar por ser
+             escuro demais. Resultado: a cartela clareou e a capa não,
+             porque a luz dela ainda era pintada com a cor velha.
+
+             É o risco de escrever cor em `rgba` literal dentro de um
+             gradiente: ela não acompanha a variável, e a defasagem não
+             dá erro em lugar nenhum — só aparece como uma seção que
+             ficou escura sem motivo.
+
+             Agora são os tons novos, e mais fortes: 0.55 no roxo e 0.16
+             na lavanda. A capa é a primeira tela, e é a que mais precisa
+             provar que a página é roxa e não preta. */
           background:
-            "radial-gradient(58% 48% at 76% 10%, rgba(24,0,72,0.95), transparent 70%), radial-gradient(48% 46% at 8% 94%, rgba(192,168,240,0.1), transparent 72%)",
+            "radial-gradient(62% 52% at 78% 8%, rgba(61,29,163,0.55), transparent 70%), radial-gradient(52% 50% at 6% 92%, rgba(201,180,245,0.16), transparent 72%), radial-gradient(70% 45% at 50% 100%, rgba(51,22,140,0.35), transparent 75%)",
         }}
       />
 

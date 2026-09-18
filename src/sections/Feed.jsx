@@ -75,7 +75,7 @@ export default function Feed() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(45% 60% at 18% 20%, rgba(192,168,240,0.13), transparent 70%), radial-gradient(40% 55% at 85% 70%, rgba(192,168,240,0.09), transparent 72%)",
+            "radial-gradient(45% 60% at 18% 20%, rgba(201,180,245,0.18), transparent 70%), radial-gradient(40% 55% at 85% 70%, rgba(201,180,245,0.13), transparent 72%)",
         }}
       />
 

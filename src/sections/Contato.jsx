@@ -60,7 +60,7 @@ export default function Contato() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(55% 50% at 50% 0%, rgba(192,168,240,0.14), transparent 70%)",
+            "radial-gradient(60% 55% at 50% 0%, rgba(201,180,245,0.2), transparent 70%)",
         }}
       />
 
